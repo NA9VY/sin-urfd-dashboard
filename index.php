@@ -1,61 +1,54 @@
 <?php
-$dashboards = [
-    'custom' => 'NA9VY Custom',
-    'default' => 'Stock / Default',
-];
-$current = $_GET['d'] ?? 'custom';
+// index.php - Main layout with better mobile support
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>URFD SIN Dashboard Switcher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Southern Indiana Network</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { 
-            margin:0; 
-            padding:0; 
-            background:#111; 
-            font-family:Arial, sans-serif; 
-            color: #ddd;           /* overall text color */
-        }
-        
-        .navbar {
-            background:#1a1a1a; 
-            padding:15px; 
-            text-align:center; 
-            border-bottom:3px solid #333;
-        }
-        
-        .navbar strong {
-            color: #FF8C00;        /* Orange - URFD SIN */
-            font-size: 1.3em;
-        }
-        
-        .navbar a {
-            color:#0f0; 
-            margin:0 18px; 
-            text-decoration:none; 
-            font-size:1.15em;
-        }
-        .navbar a:hover { color:#ff0; }
-        .navbar a.active { color:#ff4444; text-decoration:underline; font-weight:bold; }
-        
-        iframe {
-            width:100%; 
-            height:calc(100vh - 78px); 
-            border:none;
+        body { background: #111; color: #ddd; font-size: 14px; }
+        .container { max-width: 1400px; }
+        .table-responsive { margin-bottom: 20px; }
+        @media (max-width: 768px) {
+            .table td, .table th { font-size: 13px; padding: 6px 4px; }
+            h3 { font-size: 1.4em; }
         }
     </style>
 </head>
 <body>
-<div class="navbar">
-    <strong>URFD SIN — Dashboard Switcher:</strong>
-    <?php foreach($dashboards as $dir => $name): ?>
-        <a href="?d=<?= $dir ?>" class="<?= $current === $dir ? 'active' : '' ?>">
-            <?= $name ?>
-        </a>
-    <?php endforeach; ?>
+
+<?php
+// Include your navigation / header here (whatever you currently have)
+include("header.php");   // or whatever your header file is
+?>
+
+<div class="container">
+    <div class="row">
+        <!-- Left Sidebar -->
+        <div class="col-md-3 col-sm-4">
+            <?php include("menu.php"); ?>   <!-- or your left menu file -->
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-9 col-sm-8">
+            <?php
+            // This is where your pages (users.php, etc.) get loaded
+            if (isset($_GET['page'])) {
+                $page = basename($_GET['page']);
+                include($page . ".php");
+            } else {
+                include("users.php");
+            }
+            ?>
+        </div>
+    </div>
 </div>
-<iframe src="<?= htmlspecialchars($current) ?>/index.php" title="Dashboard"></iframe>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>
