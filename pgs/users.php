@@ -165,7 +165,7 @@ for ($i=0;$i<$Reflector->StationCount();$i++) {
          </h3>
          
          <?php
-         $summaryFile = '/var/www/urf/custom/urfd-latest.json';
+         $summaryFile = '/var/www/urf/urfd-latest.json';
 
          if (file_exists($summaryFile)) {
              $data = json_decode(file_get_contents($summaryFile), true);
